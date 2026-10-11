@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 export default function ProtectedRoute({ children, allowedRoles }) {
   const [status, setStatus] = useState("loading");
   const [userRole, setUserRole] = useState(null);
@@ -15,7 +16,7 @@ export default function ProtectedRoute({ children, allowedRoles }) {
     }
 
     axios
-      .get("http://localhost:5000/api/verify-token", {
+      axios.get(`${API_URL}/api/verify-token`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

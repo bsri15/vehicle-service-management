@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Register.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 function calculatePasswordStrength(password) {
   if (!password) return { score: 0, label: "", cls: "" };
   let score = 0;
@@ -97,7 +98,7 @@ function LoginForm({ onSuccess, switchTab }) {
     setLoading(true);
     setAlertMessage(null);
     try {
-      const response = await axios.post("http://localhost:5000/api/login", form);
+      const response = await axios.post(`${API_URL}/api/login`, form);
       if (response.data.message === "success") {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userName", response.data.name);
@@ -233,7 +234,7 @@ function ForgotForm({ switchTab }) {
     setLoading(true);
     setAlertMessage(null);
     try {
-      const response = await axios.post("http://localhost:5000/api/reset-password", {
+      const response = await axios.post(`${API_URL}/api/reset-password`, {
         email: form.email,
         newPassword: form.password
       });
@@ -376,7 +377,7 @@ function SignupForm({ onSuccess, switchTab }) {
     setLoading(true);
     setAlertMessage(null);
     try {
-      const response = await axios.post("http://localhost:5000/api/register", {
+      const response = await axios.post(`${API_URL}/api/register`, {
         fullname: form.name,
         email: form.email,
         phone: form.phone,

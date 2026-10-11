@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
   return {
@@ -88,7 +89,7 @@ export default function CustomerBookForm({ onServiceAdded, userName }) {
         year: "numeric"
       });
 
-      await axios.post("http://localhost:5000/api/services", {
+      await axios.post(`${API_URL}/api/services`, {
         vehicle: form.vehicle,
         owner: form.owner,
         phone: form.phone,

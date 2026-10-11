@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 export default function CustomerBookings({ services, onRefresh }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -12,7 +13,7 @@ export default function CustomerBookings({ services, onRefresh }) {
     if (!window.confirm("Are you sure you want to cancel this booking?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`http://localhost:5000/api/services/${id}/cancel`, {}, {
+      await axios.put(`${API_URL}/api/services/${id}/cancel`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (onRefresh) onRefresh();

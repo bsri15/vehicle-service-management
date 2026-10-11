@@ -9,6 +9,7 @@ import CustomerBookForm from "../components/CustomerBookForm";
 import CustomerProfile from "../components/CustomerProfile";
 import CustomerWallet from "../components/CustomerWallet";
 
+const API_URL = import.meta.env.VITE_API_URL;
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
   return {
@@ -43,7 +44,7 @@ export default function UserDashboard() {
   }, []);
 
   function fetchServices() {
-    axios.get("http://localhost:5000/api/services", getAuthHeaders())
+    axios.get(`${API_URL}/api/services`, getAuthHeaders())
       .then(res => setServicesList(res.data.services || []))
       .catch(err => {
         if (err?.response?.status === 401) {

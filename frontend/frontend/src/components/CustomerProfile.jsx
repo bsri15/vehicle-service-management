@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
   return {
@@ -16,7 +17,7 @@ export default function CustomerProfile() {
   const [alert, setAlert] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/profile", getAuthHeaders())
+    axios.get(`${API_URL}/api/profile`, getAuthHeaders())
       .then(res => {
         setProfile(res.data.user);
         setEditForm({
@@ -45,7 +46,7 @@ export default function CustomerProfile() {
     setAlert(null);
 
     try {
-      const response = await axios.put("http://localhost:5000/api/profile", {
+      const response = await axios.put(`${API_URL}/api/profile`, {
         fullname: editForm.fullname,
         phone: editForm.phone,
         newPassword: editForm.newPassword

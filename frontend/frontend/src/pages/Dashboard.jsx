@@ -10,6 +10,7 @@ import CreateService from "../components/CreateService";
 import ReportsOverview from "../components/ReportsOverview";
 import Footer from "../components/Footer";
 
+const API_URL = import.meta.env.VITE_API_URL;
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
   return {
@@ -32,7 +33,7 @@ export default function Dashboard() {
   const [servicesList, setServicesList] = useState([]);
 
   function fetchServices() {
-    axios.get("http://localhost:5000/api/services", getAuthHeaders())
+    axios.get(`${API_URL}/api/services`, getAuthHeaders())
       .then(res => {
         setServicesList(res.data.services || []);
       })
@@ -48,7 +49,7 @@ export default function Dashboard() {
 
   async function updateServiceStatus(id, newStatus) {
     try {
-      await axios.put(`http://localhost:5000/api/services/${id}/status`, {
+      await axios.put(`${API_URL}/api/services/${id}/status`, {
         status: newStatus
       }, getAuthHeaders());
       fetchServices();
